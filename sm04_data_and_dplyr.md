@@ -1,5 +1,5 @@
 
-# STAT 540 - Seminar 3: Reading in data and manipulating with dplyr
+# STAT 540 - Seminar 4: Reading in data and manipulating with dplyr
 
 # Objectives
 
@@ -59,6 +59,24 @@ want using the getGEO function.
 
 ``` r
 gds <- getGEO("GDS507")
+```
+
+    ## File stored at:
+
+    ## C:\Users\Lab\AppData\Local\Temp\RtmpKi9bmz/GDS507.soft.gz
+
+    ## Rows: 22645 Columns: 19
+
+    ## -- Column specification --------------------------------------------------------
+    ## Delimiter: "\t"
+    ## chr  (2): ID_REF, IDENTIFIER
+    ## dbl (17): GSM11815, GSM11832, GSM12069, GSM12083, GSM12101, GSM12106, GSM122...
+
+    ## 
+    ## i Use `spec()` to retrieve the full column specification for this data.
+    ## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+``` r
 #we can use str() to peak at the structure of a data object. 
 str(gds)
 ```
@@ -81,18 +99,18 @@ str(gds)
     ##   .. .. .. ..$ GSM11815  : num [1:22645] 4254 17996 41679 65391 19030 ...
     ##   .. .. .. ..$ GSM11832  : num [1:22645] 5298 12011 39117 34806 15814 ...
     ##   .. .. .. ..$ GSM12069  : num [1:22645] 4026 10284 38759 31257 16356 ...
-    ##   .. .. .. ..$ GSM12083  : num [1:22645] 3498 2535 32848 28308 9580 ...
+    ##   .. .. .. ..$ GSM12083  : num [1:22645] 3498 2535 32848 28309 9580 ...
     ##   .. .. .. ..$ GSM12101  : num [1:22645] 3566 11048 39634 67448 14274 ...
     ##   .. .. .. ..$ GSM12106  : num [1:22645] 4903 13354 43511 56990 17217 ...
-    ##   .. .. .. ..$ GSM12274  : num [1:22645] 6373 8564 46857 57972 19117 ...
-    ##   .. .. .. ..$ GSM12299  : num [1:22645] 4829 17248 47032 57570 17488 ...
+    ##   .. .. .. ..$ GSM12274  : num [1:22645] 6373 8564 46857 57973 19117 ...
+    ##   .. .. .. ..$ GSM12299  : num [1:22645] 4829 17248 47032 57571 17488 ...
     ##   .. .. .. ..$ GSM12412  : num [1:22645] 5206 16018 22152 29062 14672 ...
     ##   .. .. .. ..$ GSM11810  : num [1:22645] 2757 6077 26661 35141 17733 ...
     ##   .. .. .. ..$ GSM11827  : num [1:22645] 3932 15704 26374 23629 18022 ...
-    ##   .. .. .. ..$ GSM12078  : num [1:22645] 3730 10138 23810 22100 17957 ...
+    ##   .. .. .. ..$ GSM12078  : num [1:22645] 3730 10138 23810 22101 17957 ...
     ##   .. .. .. ..$ GSM12099  : num [1:22645] 3223 11614 24749 21651 15958 ...
     ##   .. .. .. ..$ GSM12269  : num [1:22645] 3640 8460 21937 18551 15800 ...
-    ##   .. .. .. ..$ GSM12287  : num [1:22645] 4886 10283 31463 23496 16686 ...
+    ##   .. .. .. ..$ GSM12287  : num [1:22645] 4886 10283 31463 23497 16686 ...
     ##   .. .. .. ..$ GSM12301  : num [1:22645] 4070 11844 22734 21315 18817 ...
     ##   .. .. .. ..$ GSM12448  : num [1:22645] 3482 9742 25396 28631 17421 ...
     ##   ..@ header   :List of 23
@@ -131,6 +149,15 @@ structure above to an `ExpressionSet` object.
 
 ``` r
 eset <- GDS2eSet(gds)
+```
+
+    ## File stored at:
+
+    ## C:\Users\Lab\AppData\Local\Temp\RtmpKi9bmz/GPL97.annot.gz
+
+    ## Warning: One or more parsing issues, see `problems()` for details
+
+``` r
 eset
 ```
 
@@ -335,9 +362,13 @@ package](https://www.tidyverse.org/blog/2019/11/dtplyr-1-0-0/) is a
 package that unifies `dplyr` syntax with a `data.table` backend.
 
 An important thing to know about the `dplyr` verbs (and `data.table` for
-that matter) is that they will only work on data frames that meet
-certain structural criteria. Namely, each variable must be in its own
-column. In data science, we call this “tidy” data.
+that matter) is that they were developed to work efficiently on data
+frames that meet certain structural criteria.In data science, we call
+this “tidy” data. For a data to be called it must meet the following
+criteria:
+
+1.  Each column is a variable
+2.  Each row is an unique observational unit
 
 Let’s look at a few small datasets that are “tidy”.
 
@@ -357,7 +388,7 @@ head(iris) #data describing flower parts for several species
 head(band_members) #Members of the Beatles and Rolling Stones
 ```
 
-    ## # A tibble: 3 × 2
+    ## # A tibble: 3 x 2
     ##   name  band   
     ##   <chr> <chr>  
     ## 1 Mick  Stones 
@@ -368,7 +399,7 @@ head(band_members) #Members of the Beatles and Rolling Stones
 head(band_instruments) #Instruments of the above band members
 ```
 
-    ## # A tibble: 3 × 2
+    ## # A tibble: 3 x 2
     ##   name  plays 
     ##   <chr> <chr> 
     ## 1 John  guitar
@@ -422,7 +453,7 @@ mpg %>%
   summarise(fuel_efficiency = mean(hwy))
 ```
 
-    ## # A tibble: 7 × 2
+    ## # A tibble: 7 x 2
     ##   class      fuel_efficiency
     ##   <chr>                <dbl>
     ## 1 2seater               24.8
@@ -455,7 +486,7 @@ iris %>%
     head()
 ```
 
-    ## # A tibble: 6 × 5
+    ## # A tibble: 6 x 5
     ## # Groups:   Species [1]
     ##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
     ##          <dbl>       <dbl>        <dbl>       <dbl> <fct>  
@@ -489,7 +520,7 @@ iris %>%
     head()
 ```
 
-    ## # A tibble: 6 × 6
+    ## # A tibble: 6 x 6
     ## # Groups:   Species [1]
     ##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species Capitalized_names
     ##          <dbl>       <dbl>        <dbl>       <dbl> <fct>   <chr>            
@@ -508,7 +539,7 @@ iris %>%
     head()
 ```
 
-    ## # A tibble: 3 × 3
+    ## # A tibble: 3 x 3
     ##   Species    average_sepal_length     n
     ##   <fct>                     <dbl> <int>
     ## 1 setosa                     5.01    50
@@ -537,7 +568,7 @@ band_members %>% left_join(band_instruments)
 
     ## Joining, by = "name"
 
-    ## # A tibble: 3 × 3
+    ## # A tibble: 3 x 3
     ##   name  band    plays 
     ##   <chr> <chr>   <chr> 
     ## 1 Mick  Stones  <NA>  
@@ -550,7 +581,7 @@ band_members %>% right_join(band_instruments)
 
     ## Joining, by = "name"
 
-    ## # A tibble: 3 × 3
+    ## # A tibble: 3 x 3
     ##   name  band    plays 
     ##   <chr> <chr>   <chr> 
     ## 1 John  Beatles guitar
@@ -563,7 +594,7 @@ band_members %>% full_join(band_instruments)
 
     ## Joining, by = "name"
 
-    ## # A tibble: 4 × 3
+    ## # A tibble: 4 x 3
     ##   name  band    plays 
     ##   <chr> <chr>   <chr> 
     ## 1 Mick  Stones  <NA>  
@@ -604,7 +635,7 @@ long_data <- pivot_longer(expr_data,
 long_data
 ```
 
-    ## # A tibble: 384,965 × 3
+    ## # A tibble: 384,965 x 3
     ##    ID          sample   Expression
     ##    <chr>       <chr>         <dbl>
     ##  1 200000_s_at GSM11815      4254 
@@ -617,7 +648,7 @@ long_data
     ##  8 200000_s_at GSM12299      4829.
     ##  9 200000_s_at GSM12412      5206.
     ## 10 200000_s_at GSM11810      2757.
-    ## # … with 384,955 more rows
+    ## # ... with 384,955 more rows
 
 You can see that the first \~20,000 rows will correspond to data from
 the first probe identifier, and the next group of rows will correspond
@@ -639,7 +670,7 @@ long_data %>%
     summarize(mean = mean(Expression))
 ```
 
-    ## # A tibble: 17 × 2
+    ## # A tibble: 17 x 2
     ##    sample    mean
     ##    <chr>    <dbl>
     ##  1 GSM11810  765.
@@ -673,7 +704,7 @@ expression data object we just created using a join operation.
               by = "ID"))
 ```
 
-    ## # A tibble: 384,965 × 4
+    ## # A tibble: 384,965 x 4
     ##    ID          sample   Expression `Gene symbol`
     ##    <chr>       <chr>         <dbl> <chr>        
     ##  1 200000_s_at GSM11815      4254  PRPF8        
@@ -686,7 +717,7 @@ expression data object we just created using a join operation.
     ##  8 200000_s_at GSM12299      4829. PRPF8        
     ##  9 200000_s_at GSM12412      5206. PRPF8        
     ## 10 200000_s_at GSM11810      2757. PRPF8        
-    ## # … with 384,955 more rows
+    ## # ... with 384,955 more rows
 
 Another thing we note is that there are multiple probes that map to a
 specific gene. In a real life analysis workflow, there are multiple ways
@@ -703,7 +734,7 @@ of each probe’s expression.
 
     ## `summarise()` has grouped output by 'sample'. You can override using the `.groups` argument.
 
-    ## # A tibble: 182,920 × 3
+    ## # A tibble: 182,920 x 3
     ## # Groups:   sample [17]
     ##    sample   `Gene symbol` Expression
     ##    <chr>    <chr>              <dbl>
@@ -717,7 +748,7 @@ of each probe’s expression.
     ##  8 GSM11810 "AADAT"            414. 
     ##  9 GSM11810 "AAED1"            858. 
     ## 10 GSM11810 "AAGAB"            301. 
-    ## # … with 182,910 more rows
+    ## # ... with 182,910 more rows
 
 Now, every gene will only have one value per sample.
 
@@ -761,7 +792,7 @@ identify_gene_names <- function(df){
   mutate(chromosome_name = as.factor(as.numeric(chromosome_name))))
 ```
 
-    ## # A tibble: 147,628 × 4
+    ## # A tibble: 147,628 x 4
     ## # Groups:   sample [17]
     ##    sample   hgnc_symbol Expression chromosome_name
     ##    <chr>    <chr>            <dbl> <fct>          
@@ -775,7 +806,7 @@ identify_gene_names <- function(df){
     ##  8 GSM11810 AAK1            2190.  2              
     ##  9 GSM11810 AARS2            638.  6              
     ## 10 GSM11810 AASDH           1212.  4              
-    ## # … with 147,618 more rows
+    ## # ... with 147,618 more rows
 
 Here we’ve only added chromosome name - you can use
 `listAttributes(human)` to get a list of many many different attributes
@@ -799,7 +830,7 @@ full_data %>%
     summarize(mean = mean(Expression))
 ```
 
-    ## # A tibble: 2 × 2
+    ## # A tibble: 2 x 2
     ##   disease.state  mean
     ##   <fct>         <dbl>
     ## 1 normal         836.
@@ -873,7 +904,7 @@ genetests <- full_data %>%
 genetests
 ```
 
-    ## # A tibble: 8,684 × 2
+    ## # A tibble: 8,684 x 2
     ##    hgnc_symbol pvalue
     ##    <chr>        <dbl>
     ##  1 A1BG        0.708 
@@ -886,7 +917,7 @@ genetests
     ##  8 AAK1        0.0229
     ##  9 AARS2       0.0416
     ## 10 AASDH       0.0743
-    ## # … with 8,674 more rows
+    ## # ... with 8,674 more rows
 
 We can plot the p-value distributions of the above t-test.
 

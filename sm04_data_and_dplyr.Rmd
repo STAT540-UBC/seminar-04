@@ -2,7 +2,7 @@
 output: github_document
 ---
 
-# STAT 540 - Seminar 3: Reading in data and manipulating with dplyr
+# STAT 540 - Seminar 4: Reading in data and manipulating with dplyr
 
 # Objectives
 
@@ -127,7 +127,10 @@ They are:
 
 Most, if not all, of these operations are available in the `data.table` package, albeit in a less readable syntax. This package was developed to quickly read, write, and manipulate large amounts of data. If you plan to work with large sets of features, it may be helpful to consider learning this framework as well. See the [Introduction to data.table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html) vignette for more information. The [`dtplyr` package](https://www.tidyverse.org/blog/2019/11/dtplyr-1-0-0/) is a package that unifies `dplyr` syntax with a `data.table` backend.
 
-An important thing to know about the `dplyr` verbs (and `data.table` for that matter) is that they will only work on data frames that meet certain structural criteria. Namely, each variable must be in its own column. In data science, we call this "tidy" data. 
+An important thing to know about the `dplyr` verbs (and `data.table` for that matter) is that they were developed to work efficiently on data frames that meet certain structural criteria.In data science, we call this "tidy" data. For a data to be called it must meet the following criteria:
+
+1. Each column is a variable
+2. Each row is an unique observational unit
 
 Let's look at a few small datasets that are "tidy".
 
