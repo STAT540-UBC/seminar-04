@@ -378,7 +378,7 @@ Complete the following tasks to earn full marks for this seminar. Make sure to c
 
 Starting with the `full_data` object above, complete the following steps.
 
-  1. Calculate the sum of all expression values in each sample, and add it to the `full_data` object (hint: use `group_by()`, `summarize()`)
+  1. Calculate the sum of all expression values in each sample, and add it to the `full_data` object (hint: use `group_by()`, `summarize()` and `left_join()`)
   
 ```{r}
 # YOUR CODE HERE

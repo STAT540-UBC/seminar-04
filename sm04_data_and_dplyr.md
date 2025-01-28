@@ -5,12 +5,12 @@
 
 The objectives for this lecture will be to
 
--   Understand that some freely available genomic, transcriptomic and
-    proteomic data can be accessed through the [Gene Expression Omnibus
-    (GEO)](https://www.ncbi.nlm.nih.gov/geo/)
--   Explore and manipulate data using `dplyr` and `tidyr` verbs
--   Use `dplyr` verbs in conjunction with `ggplot2` to visualize aspects
-    of the data
+- Understand that some freely available genomic, transcriptomic and
+  proteomic data can be accessed through the [Gene Expression Omnibus
+  (GEO)](https://www.ncbi.nlm.nih.gov/geo/)
+- Explore and manipulate data using `dplyr` and `tidyr` verbs
+- Use `dplyr` verbs in conjunction with `ggplot2` to visualize aspects
+  of the data
 
 # Packages required
 
@@ -59,24 +59,6 @@ want using the getGEO function.
 
 ``` r
 gds <- getGEO("GDS507")
-```
-
-    ## File stored at:
-
-    ## C:\Users\Lab\AppData\Local\Temp\RtmpKi9bmz/GDS507.soft.gz
-
-    ## Rows: 22645 Columns: 19
-
-    ## -- Column specification --------------------------------------------------------
-    ## Delimiter: "\t"
-    ## chr  (2): ID_REF, IDENTIFIER
-    ## dbl (17): GSM11815, GSM11832, GSM12069, GSM12083, GSM12101, GSM12106, GSM122...
-
-    ## 
-    ## i Use `spec()` to retrieve the full column specification for this data.
-    ## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
-
-``` r
 #we can use str() to peak at the structure of a data object. 
 str(gds)
 ```
@@ -149,15 +131,6 @@ structure above to an `ExpressionSet` object.
 
 ``` r
 eset <- GDS2eSet(gds)
-```
-
-    ## File stored at:
-
-    ## C:\Users\Lab\AppData\Local\Temp\RtmpKi9bmz/GPL97.annot.gz
-
-    ## Warning: One or more parsing issues, see `problems()` for details
-
-``` r
 eset
 ```
 
@@ -324,12 +297,12 @@ set of functions designed for easy manipulation of data.
 
 They are:
 
--   **`%>%`** - Syntactic sugar for easily piping the result of one
-    function into another.
--   **`dplyr::group_by()`** - Commonly used with summarize() to derive
-    summarized values for multiple rows sharing certain attributes  
--   **`dplyr::summarize()`** - summarize certain statistics from the
-    data (i.e mean, median, mode, number of samples)
+- **`%>%`** - Syntactic sugar for easily piping the result of one
+  function into another.
+- **`dplyr::group_by()`** - Commonly used with summarize() to derive
+  summarized values for multiple rows sharing certain attributes  
+- **`dplyr::summarize()`** - summarize certain statistics from the data
+  (i.e mean, median, mode, number of samples)
 
 **`dplyr::filter()`** - extract rows that meet certain criteria from
 data frame
@@ -388,7 +361,7 @@ head(iris) #data describing flower parts for several species
 head(band_members) #Members of the Beatles and Rolling Stones
 ```
 
-    ## # A tibble: 3 x 2
+    ## # A tibble: 3 × 2
     ##   name  band   
     ##   <chr> <chr>  
     ## 1 Mick  Stones 
@@ -399,7 +372,7 @@ head(band_members) #Members of the Beatles and Rolling Stones
 head(band_instruments) #Instruments of the above band members
 ```
 
-    ## # A tibble: 3 x 2
+    ## # A tibble: 3 × 2
     ##   name  plays 
     ##   <chr> <chr> 
     ## 1 John  guitar
@@ -453,7 +426,7 @@ mpg %>%
   summarise(fuel_efficiency = mean(hwy))
 ```
 
-    ## # A tibble: 7 x 2
+    ## # A tibble: 7 × 2
     ##   class      fuel_efficiency
     ##   <chr>                <dbl>
     ## 1 2seater               24.8
@@ -486,7 +459,7 @@ iris %>%
     head()
 ```
 
-    ## # A tibble: 6 x 5
+    ## # A tibble: 6 × 5
     ## # Groups:   Species [1]
     ##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
     ##          <dbl>       <dbl>        <dbl>       <dbl> <fct>  
@@ -520,7 +493,7 @@ iris %>%
     head()
 ```
 
-    ## # A tibble: 6 x 6
+    ## # A tibble: 6 × 6
     ## # Groups:   Species [1]
     ##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species Capitalized_names
     ##          <dbl>       <dbl>        <dbl>       <dbl> <fct>   <chr>            
@@ -539,7 +512,7 @@ iris %>%
     head()
 ```
 
-    ## # A tibble: 3 x 3
+    ## # A tibble: 3 × 3
     ##   Species    average_sepal_length     n
     ##   <fct>                     <dbl> <int>
     ## 1 setosa                     5.01    50
@@ -566,9 +539,9 @@ iris %>%
 band_members %>% left_join(band_instruments) 
 ```
 
-    ## Joining, by = "name"
+    ## Joining with `by = join_by(name)`
 
-    ## # A tibble: 3 x 3
+    ## # A tibble: 3 × 3
     ##   name  band    plays 
     ##   <chr> <chr>   <chr> 
     ## 1 Mick  Stones  <NA>  
@@ -579,9 +552,9 @@ band_members %>% left_join(band_instruments)
 band_members %>% right_join(band_instruments)
 ```
 
-    ## Joining, by = "name"
+    ## Joining with `by = join_by(name)`
 
-    ## # A tibble: 3 x 3
+    ## # A tibble: 3 × 3
     ##   name  band    plays 
     ##   <chr> <chr>   <chr> 
     ## 1 John  Beatles guitar
@@ -592,9 +565,9 @@ band_members %>% right_join(band_instruments)
 band_members %>% full_join(band_instruments)
 ```
 
-    ## Joining, by = "name"
+    ## Joining with `by = join_by(name)`
 
-    ## # A tibble: 4 x 3
+    ## # A tibble: 4 × 3
     ##   name  band    plays 
     ##   <chr> <chr>   <chr> 
     ## 1 Mick  Stones  <NA>  
@@ -635,7 +608,7 @@ long_data <- pivot_longer(expr_data,
 long_data
 ```
 
-    ## # A tibble: 384,965 x 3
+    ## # A tibble: 384,965 × 3
     ##    ID          sample   Expression
     ##    <chr>       <chr>         <dbl>
     ##  1 200000_s_at GSM11815      4254 
@@ -648,13 +621,13 @@ long_data
     ##  8 200000_s_at GSM12299      4829.
     ##  9 200000_s_at GSM12412      5206.
     ## 10 200000_s_at GSM11810      2757.
-    ## # ... with 384,955 more rows
+    ## # ℹ 384,955 more rows
 
-You can see that the first \~20,000 rows will correspond to data from
-the first probe identifier, and the next group of rows will correspond
-to data from the second probe identifier. You can think of this function
-as stretching out a dataset into its long form, so that each row has
-only one expression value. If that’s not clear, I would suggest reading
+You can see that the first ~20,000 rows will correspond to data from the
+first probe identifier, and the next group of rows will correspond to
+data from the second probe identifier. You can think of this function as
+stretching out a dataset into its long form, so that each row has only
+one expression value. If that’s not clear, I would suggest reading
 [this](https://tidyr.tidyverse.org/reference/pivot_longer.html) for more
 information about what the `pivot_longer()` function does.
 
@@ -670,7 +643,7 @@ long_data %>%
     summarize(mean = mean(Expression))
 ```
 
-    ## # A tibble: 17 x 2
+    ## # A tibble: 17 × 2
     ##    sample    mean
     ##    <chr>    <dbl>
     ##  1 GSM11810  765.
@@ -704,7 +677,7 @@ expression data object we just created using a join operation.
               by = "ID"))
 ```
 
-    ## # A tibble: 384,965 x 4
+    ## # A tibble: 384,965 × 4
     ##    ID          sample   Expression `Gene symbol`
     ##    <chr>       <chr>         <dbl> <chr>        
     ##  1 200000_s_at GSM11815      4254  PRPF8        
@@ -717,7 +690,7 @@ expression data object we just created using a join operation.
     ##  8 200000_s_at GSM12299      4829. PRPF8        
     ##  9 200000_s_at GSM12412      5206. PRPF8        
     ## 10 200000_s_at GSM11810      2757. PRPF8        
-    ## # ... with 384,955 more rows
+    ## # ℹ 384,955 more rows
 
 Another thing we note is that there are multiple probes that map to a
 specific gene. In a real life analysis workflow, there are multiple ways
@@ -732,9 +705,10 @@ of each probe’s expression.
     summarize(Expression = mean(Expression)))
 ```
 
-    ## `summarise()` has grouped output by 'sample'. You can override using the `.groups` argument.
+    ## `summarise()` has grouped output by 'sample'. You can override using the
+    ## `.groups` argument.
 
-    ## # A tibble: 182,920 x 3
+    ## # A tibble: 182,920 × 3
     ## # Groups:   sample [17]
     ##    sample   `Gene symbol` Expression
     ##    <chr>    <chr>              <dbl>
@@ -748,7 +722,7 @@ of each probe’s expression.
     ##  8 GSM11810 "AADAT"            414. 
     ##  9 GSM11810 "AAED1"            858. 
     ## 10 GSM11810 "AAGAB"            301. 
-    ## # ... with 182,910 more rows
+    ## # ℹ 182,910 more rows
 
 Now, every gene will only have one value per sample.
 
@@ -792,7 +766,13 @@ identify_gene_names <- function(df){
   mutate(chromosome_name = as.factor(as.numeric(chromosome_name))))
 ```
 
-    ## # A tibble: 147,628 x 4
+    ## Warning in left_join(df, names, by = "hgnc_symbol"): Detected an unexpected many-to-many relationship between `x` and `y`.
+    ## ℹ Row 7 of `x` matches multiple rows in `y`.
+    ## ℹ Row 1 of `y` matches multiple rows in `x`.
+    ## ℹ If a many-to-many relationship is expected, set `relationship =
+    ##   "many-to-many"` to silence this warning.
+
+    ## # A tibble: 145,588 × 4
     ## # Groups:   sample [17]
     ##    sample   hgnc_symbol Expression chromosome_name
     ##    <chr>    <chr>            <dbl> <fct>          
@@ -806,7 +786,7 @@ identify_gene_names <- function(df){
     ##  8 GSM11810 AAK1            2190.  2              
     ##  9 GSM11810 AARS2            638.  6              
     ## 10 GSM11810 AASDH           1212.  4              
-    ## # ... with 147,618 more rows
+    ## # ℹ 145,578 more rows
 
 Here we’ve only added chromosome name - you can use
 `listAttributes(human)` to get a list of many many different attributes
@@ -830,11 +810,11 @@ full_data %>%
     summarize(mean = mean(Expression))
 ```
 
-    ## # A tibble: 2 x 2
+    ## # A tibble: 2 × 2
     ##   disease.state  mean
     ##   <fct>         <dbl>
-    ## 1 normal         836.
-    ## 2 RCC            862.
+    ## 1 normal         837.
+    ## 2 RCC            864.
 
 ## Exercise (not graded)
 
@@ -904,7 +884,7 @@ genetests <- full_data %>%
 genetests
 ```
 
-    ## # A tibble: 8,684 x 2
+    ## # A tibble: 8,564 × 2
     ##    hgnc_symbol pvalue
     ##    <chr>        <dbl>
     ##  1 A1BG        0.708 
@@ -917,7 +897,7 @@ genetests
     ##  8 AAK1        0.0229
     ##  9 AARS2       0.0416
     ## 10 AASDH       0.0743
-    ## # ... with 8,674 more rows
+    ## # ℹ 8,554 more rows
 
 We can plot the p-value distributions of the above t-test.
 
@@ -944,7 +924,8 @@ Starting with the `full_data` object above, complete the following
 steps.
 
 1.  Calculate the sum of all expression values in each sample, and add
-    it to the `full_data` object (hint: use `group_by()`, `summarize()`)
+    it to the `full_data` object (hint: use `group_by()`, `summarize()`
+    and `left_join()`)
 
 ``` r
 # YOUR CODE HERE
